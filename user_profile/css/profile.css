@@ -1,0 +1,134 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{ 
+    background: #4AC29A;
+    background: -webkit-linear-gradient(to right, #BDFFF3, #4AC29A);
+    background: linear-gradient(to right, #BDFFF3, #4AC29A);
+}
+img {
+    width: 90%;
+    height: auto;
+}
+.navbar-dark .navbar-nav .nav-link{
+    color:#D4F1F4;
+    letter-spacing: 1.5px;
+}
+.nav-item{
+    margin: 0 25px;
+}
+#hover:hover{
+    color:#05445E;
+    transform: scale(1.1);
+}
+.nav{
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.row-container {
+    display: table;
+    width: 100%;
+}
+.dropdown ul {
+    display: none;
+}
+.dropdown:hover ul {
+    display: block;
+    background-color:rgba(189, 255, 243,0.5);
+    border:0;
+    font-style: 15px;
+}
+.dropdown ul li {
+    margin: 0;
+    padding: 0;
+}
+.dropdown ul li a {
+    display: block;
+    padding: 10px;
+}
+.dropdown ul li a:hover {
+    background-color:rgba(189, 255, 243,0.5);
+    transform: scale(1);
+}
+.col {
+    display: table-cell;
+    padding: 16px;
+}
+.box {
+    height: 100%;
+}
+.space{
+    letter-spacing: 1.5px;
+}
+.center {
+    position: relative;
+}
+.center .board {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.cardbg{
+    background: #4AC29A;
+    background: -webkit-linear-gradient(to right, #BDFFF3, #4AC29A);
+    background: linear-gradient(to right, #BDFFF3, #4AC29A);
+}
+.profilecard{
+    background-color: #4AC29A;
+}
+.container-fixed-height {
+    height: 60vh; 
+}
+input.input_field, textarea {
+    background-color: #BDFFF3;
+    border: none;
+}
+input.input_field:focus, input.input_field:active, textarea:focus, textarea:active {
+    background-color: #BDFFF3;
+}
+textarea.input_field, textarea {
+    background-color: #BDFFF3;
+    border: none;
+}  
+textarea.input_field:focus, input.input_field:active, textarea:focus, textarea:active {
+    background-color: #BDFFF3;
+}
+.name {
+    color:#05445E;
+}
+.send {
+    background-color: #05445E;
+    color: #BDFFF3;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    letter-spacing: 2px;
+    border-radius: 5px;
+    padding: 12px 32px;
+    font-size: 13px;
+}
+.banner {
+    display: flex;       
+    justify-content: center;
+    align-items: center; 
+}
+.otpcontainer {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
+
+/* password_update */
+.otpmodel {
+    display: none;
+}
+.headingshadow {
+    text-shadow: 2px 2px 4px rgba(243, 233, 233, 0.5);
+}
+.text-button {
+    
+  }
