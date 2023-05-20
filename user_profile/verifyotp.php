@@ -18,7 +18,21 @@ if(isset($_POST['validate-otp'])){
     if($row > 0){
         $sql = "UPDATE `user` SET `date_time` = now() ,`otp_status` = 1, `otp_attempts` = 0 ,`mail_status` = 1  WHERE email = '$email'";
         mysqli_query($con,$sql);
-        header('location: profile.php');
+        // header('location: profile.php');
+        ?>
+            <script>
+                window.addEventListener('load', function(){
+                    Swal.fire({
+                        icon: 'Success',
+                        title: 'Account Verified',
+                        text: 'Your account has been successfully verified.'
+                    })
+                });
+                setTimeout(function() {
+                    window.location.href = "profile.php";
+                });
+            </script>
+        <?php
     }else{
         $sql1 = "SELECT otp_attempts FROM `user` WHERE email = '$email'";
         $result = mysqli_query($con,$sql1);

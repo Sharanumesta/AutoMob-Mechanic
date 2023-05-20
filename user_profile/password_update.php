@@ -7,7 +7,7 @@
     if(!$_SESSION['logged']){
         header('location : login.php');
     }
-    
+
     // Create connection
     $con = mysqli_connect($servername, $username, $password, $database);
 
@@ -183,9 +183,9 @@
                         <button class="send mt-2 fw-bold" name="update">Update</button>               
                     </div>
                     <div class="d-flex justify-content-center mt-3">
-                        <p class='name' style="font-size: 0.80rem;">
+                        <p class='name' style="font-size: 0.75rem;">
                             Can't remember current password ?
-                            <a href="change_pwd.php" name='updatepass' class='fw-bold name cursor-pointer' style="font-size: 0.85rem">Update with OTP</a>
+                            <a href="forgot_password.php" name='updatepass' class='fw-bold name cursor-pointer' style="font-size: 0.85rem">Forgot your password ?</a>
                         </p>
                     </div>
                 </div>

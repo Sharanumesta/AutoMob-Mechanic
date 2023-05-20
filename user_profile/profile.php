@@ -75,18 +75,18 @@
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link active ms-2 me-2 fw-bold" data-bs-toggle="modal" data-bs-target="#modal" id='hover'>Logout</a>
-                    <div class="modal fade" id="modal">
+                    <div class="modal fade " id="modal">
                         <div class="modal-dialog">
-                            <div class="modal-content">
+                            <div class="modal-content" style="background-color:#beeae2;">
                                 <div class="modal-header">
-                                <p class="fw-bold">Confirm Logout</p> 
+                                    <p class="fw-bold">Confirm Logout</p> 
                                 </div>
                                 <div class="modal-body mt-2 mb-2 ps-5 ">
-                                <p class="fs-5">Are you sure! you want to logout?</p> 
+                                    <p class="fs-5">Are you sure! you want to logout?</p> 
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-danger" data-bs-dismiss="modal" data-bs-target="#modal">No</button> 
-                                <a href="logout.php"><button class="btn btn-success">Yes</button></a>
+                                    <a href="logout.php"><button class="btn btn-success">Yes</button></a>
                                 </div>
                             </div>
                         </div>

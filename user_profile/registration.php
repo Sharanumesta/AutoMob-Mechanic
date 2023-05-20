@@ -101,49 +101,66 @@
                 $name_value=$name;
                 $phone_value=$phone;
                 $email_value=$email;
+                $pass_value=$password;
+                $pass2_value=$confirmpass;
             }elseif(!preg_match("/[A-Z]+/", $password)){
                 $passErr = "Password must contain at least one uppercase letter";
                 $name_value=$name;
                 $phone_value=$phone;
                 $email_value=$email;
+                $pass_value=$password;
+                $pass2_value=$confirmpass;
             }elseif(!preg_match("/[a-z]+/", $password)){
                 $passErr = "Password must contain at least one lowercase letter";
                 $name_value=$name;
                 $phone_value=$phone;
                 $email_value=$email;
+                $pass_value=$password;
+                $pass2_value=$confirmpass;
             }elseif(!preg_match("/[^\w\s]+/", $password)){
                 $passErr = "Password must contain at least one special character";
                 $name_value=$name;
                 $phone_value=$phone;
                 $email_value=$email;
+                $pass_value=$password;
+                $pass2_value=$confirmpass;
             }
         }
-        if($password!==$confirmpass){
-            $passmatchErr= "Password does not match";
+        if(empty($confirmpass)){
+            $passmatchErr = "Enter password again";
             $name_value=$name;
             $phone_value=$phone;
-            $email_value=$email;    
+            $email_value=$email;
+            $pass_value=$password;
+        }else if($password != $confirmpass){
+            $passmatchErr = "Password does not match";
+            $name_value=$name;
+            $phone_value=$phone;
+            $email_value=$email;
+            $pass_value=$password;
+            $pass2_value=$confirmpass;
         }
 
-        if (empty($nameErr) && empty($phErr) && empty($emailErr) && empty($passErr)){
+        if (empty($nameErr) && empty($phErr) && empty($emailErr) && empty($passErr) && empty($passmatchErr)){
             $_SESSION['email'] = $email;
             $_SESSION['status'] = false;
             $_SESSION['logged'] = true;
 
                 // insert data into DB
                 $hashed_pass = password_hash($password,PASSWORD_DEFAULT);
-                $sql = "INSERT INTO user (name,phone,email,password,role) VALUES ('$username','$phone','$email','$password','user')";
-                
-                $otp = rand(100000,999999);
-                $sql = "INSERT INTO user (name,phone,email,password,otp) VALUES ('$username','$phone','$email','$hashed_pass',$otp)";
+                $sql = "INSERT INTO user (name,phone,email,password) VALUES ('$username','$phone','$email','$hashed_pass')";
+                mysqli_query($con,$sql);
+
                 //Sent mail to user
+                $otp = rand(100000,999999);
                 $to = $email;
                 $subject = 'Email verification code';
                 $message = 'your 6 digit registration otp is '. $otp . '.';
                 $headers = 'From: webmaster@example.com' . '\r\n';
 
-                if(mail($to, $subject, $message, $headers)){ 
-                    mysqli_query($con,$sql);
+                if(mail($to, $subject, $message, $headers)){
+                    $sql2 = "UPDATE `user` SET `otp`= $otp, `date_time` = now() WHERE email = '$email'";
+                    mysqli_query($con,$sql2);
                     header('Location: verifyotp.php');
                 }
             }

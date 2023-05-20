@@ -84,7 +84,7 @@
         //db query execution 
         if($nameError == '' && $numError == '' && $phoneError == '' && $emailError == '' && $noChangeError == ''){
 
-            $sql2 = "UPDATE user SET email='$updated_email', name='$updated_name', phone='$updated_phone', password='$updated_password' WHERE email='$email'";
+            $sql2 = "UPDATE user SET email='$updated_email', name='$updated_name', phone='$updated_phone' WHERE email='$email'";
 
             $result2 = mysqli_query($con, $sql2);
 
@@ -177,7 +177,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label fw-bold">Password<span id="error">*</span> : </label>
-                        <input type="text" class="form-control input_field fs-4 pb-0 " name="password" readonly value="********">
+                        <input type="password" class="form-control input_field " name="password" readonly value="........">
                     </div>
                     <div class="d-flex justify-content-center">
                         <button class="send mb-2 fw-bold" name="update">Update</button>               

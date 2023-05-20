@@ -2,18 +2,18 @@
 
 @include 'db.php';
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL); 
-
 session_start();
 
+$email_value = $email_error = '';
 //For sweet alert and alert message
 $_SESSION['status'] = false;
 $_SESSION['flag'] = false;
 
-$block = 1 ;
+$block = 0 ;
 $email_phone_err = $passErr ="" ;
 $email_phone_value = $pass_value = "";
+
+$con = mysqli_connect($servername, $username, $password, $database);
 
 if(isset($_POST['login'])){
    $email_phone = $_POST['email_phone'];
@@ -29,7 +29,6 @@ if(isset($_POST['login'])){
       $passErr = 'Enter the password';
       $email_phone_value = $email_phone;
    }else{
-      $con = mysqli_connect($servername, $username, $password, $database);
       $select = "SELECT * FROM user WHERE email = '$email_phone' OR phone = '$email_phone'";
       $result = mysqli_query($con, $select);
       $row = mysqli_fetch_assoc($result);
@@ -57,19 +56,45 @@ if(isset($_POST['login'])){
    }
 }
 }
+
 if(isset($_POST['forgot_pass'])){
-   $block = 1 ;
+   $block = 1  ;
 }
+
+if (isset($_POST['get_otp'])) {
+   $email = $_POST['email'];
+   if (empty($email)) {
+      $email_error = 'Please enter your email';
+      $block = 1  ;
+   } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $email_error = "Invalid email address";
+      $email_value = $email;
+      $block = 1  ;
+   } else {
+      $con = mysqli_connect($servername, $username, $password, $database);
+      $select = "SELECT * FROM user WHERE email = '$email'";
+      $result = mysqli_query($con, $select);
+      $row = mysqli_fetch_assoc($result);
+      if ($row > 0) {
+         $_SESSION['email'] = $email;
+         $_SESSION['otp_sent'] = true;
+         header('location:forgot_password.php');
+      }else{
+         $email_error = "This email address does not exist";
+         $email_value = $email;
+         $block = 1  ;
+      }
+   }
+}
+
 ?>
 <!DOCTYPE html>
 <head>
    <title>login form</title>
-
    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
    <link rel="stylesheet"  type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
    <link rel="stylesheet" href="css/profile.css">
-
 </head>
 <body class="">
    <div class="container vh-100 d-flex" style="width:75%;">
@@ -79,8 +104,8 @@ if(isset($_POST['forgot_pass'])){
          <div class="row justify-content-center align-items-center">
             <div class="col d-flex justify-content-center align-items-center h-75" >
                <div class="row  border-0 rounded-3 shadow-lg">
-                  <div class="col border-0 rounded-3 shadow-lg ">
-                     <div class=" p-3 d-flex profilecard d-flex justify-content-center align-items-center rounded text-center">
+                  <div class="col border-0 rounded-3 shadow-lg">
+                     <div class=" p-3 d-flex profilecard  h-100 d-flex justify-content-center align-items-center rounded text-center">
                         <img src="assets/images/login.png" class="img-fluid" alt="Sample image">
                      </div>
                   </div>
@@ -109,7 +134,8 @@ if(isset($_POST['forgot_pass'])){
                               <div class="row">
                                  <div class="col-6 d-flex justify-content-start">
                                     <div class=" fw-semibold">
-                                       <input class="check" type="checkbox" onclick="myFunction();">&nbsp;&nbsp;Show Password
+                                       <input type="checkbox" id="check" onclick="myFunction()">
+                                       <label for="check" class=" name">Show Password</label>
                                     </div>
                                  </div>
                                  <div class="col-6 d-flex justify-content-end pb-3">
@@ -138,7 +164,7 @@ if(isset($_POST['forgot_pass'])){
       <?php
          }
       ?>
-      
+
       <?php
          if($block == 1){
       ?>
@@ -146,15 +172,18 @@ if(isset($_POST['forgot_pass'])){
             <div class="row vh-100">
                <div class="col-6 m-auto">
                   <div class="row">
-                     <div class="col nav border-0 rounded-3">
-                        <form class="" action="" method="post">
-                           <div class="row p-5">
-                              <div class="">
-                                 <label class='name h5' for="email"></label>
-                                 <input id='email' class=" text-center form-control rounded input_field" name='email' type="email" placeholder='Enter your Email'/>
+                     <div class="col border-0 rounded-3 shadow-lg">
+                        <form method="post">
+                           <div class="row px-2 py-4">
+                              <div class="text-center col-10 mx-auto">
+                                 <label class='name h5 pb-3' for="email">Enter your email to receive an OTP</label>
+                                 <input id='email' class="text-center form-control rounded input_field" name='email' type="email" placeholder='Enter your Email' value="<?php echo $email_value ?>"/>
+                                 <div class="pt-2">
+                                    <span class="text-danger fw-semibold"><?php echo $email_error ?></span>
+                                 </div>
                               </div>
-                              <div class="mt-4">
-                                 <button class="send fw-bold validate" name='validate-otp'>Validate</button>
+                              <div class="text-center mt-4">
+                                 <button class="send fw-semibold validate" name='get_otp'>Get otp</button>
                               </div>
                            </div>
                         </form>
