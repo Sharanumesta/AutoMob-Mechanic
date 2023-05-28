@@ -4,6 +4,10 @@
     
     session_start();
 
+    if($_SESSION['logged']){
+        header('location: profile.php');
+    }
+     
     $con = mysqli_connect($servername, $username, $password, $database);
 
 	function testinput($data) {
@@ -160,8 +164,11 @@
 
                 if(mail($to, $subject, $message, $headers)){
                     $sql2 = "UPDATE `user` SET `otp`= $otp, `date_time` = now() WHERE email = '$email'";
-                    mysqli_query($con,$sql2);
-                    header('Location: verifyotp.php');
+                    $result = mysqli_query($con,$sql2);
+                    if($result){
+                        header('Location: verifyotp.php');
+                        exit();
+                    }
                 }
             }
         }
@@ -196,7 +203,7 @@
             <div class="row  border-0 rounded-3 shadow-lg">
                 <div class="col border-0 rounded-3 shadow-lg">
                     <div class="h-100 p-3 d-flex profilecard d-flex justify-content-center align-items-center rounded text-center">
-                        <img class='img-fluid' src="assets/images/image1.png" alt="Sample image">
+                        <img class='img-fluid' src="assets/images/register.png" alt="Sample image">
                     </div>
                 </div>
                 <div class="col">
@@ -205,23 +212,23 @@
                             <p class="space text-uppercase text-center mb-4 fw-bold h3" style="color:#05445E;">Create Account</p>
                         </div>
                         <div class="row mb-3">
-                            <input class="form-control form-control-md  fw-semibold input_field" type="text" name="name"  placeholder="Name" value="<?php echo $name_value; ?>">
+                            <input class="form-control form-control-md input_field" type="text" name="name"  placeholder="Name" value="<?php echo $name_value; ?>">
                             <span class="text-danger fw-semibold " style="font-size:small"><?php echo $nameErr; ?></span>
                         </div>
                         <div class="row mb-3">
-                            <input class="form-control form-control-md  fw-semibold input_field" type="tel" name="phone"  placeholder="Phone" value="<?php echo $phone_value; ?>">
+                            <input class="form-control form-control-md input_field" type="tel" name="phone"  placeholder="Phone" value="<?php echo $phone_value; ?>">
                             <span class="text-danger fw-semibold " style="font-size:small"><?php echo $phErr; ?></span>
                         </div>
                         <div class="row mb-3">
-                            <input class="form-control form-control-md fw-semibold input_field" type="email" name="email"  placeholder="Email" value="<?php echo $email_value; ?>">
+                            <input class="form-control form-control-md input_field" type="email" name="email"  placeholder="Email" value="<?php echo $email_value; ?>">
                             <span class="text-danger fw-semibold " style="font-size:small"><?php echo $emailErr; ?></span>
                         </div>
                         <div class="row mb-3">
-                            <input class="form-control form-control-md fw-semibold input_field" type="password" name="pass" id="password" placeholder="Password" value="<?php echo $pass_value; ?>">
+                            <input class="form-control form-control-md input_field" type="password" name="pass" id="password" placeholder="Password" value="<?php echo $pass_value; ?>">
                             <span class="text-danger fw-semibold " style="font-size:small"><?php echo $passErr; ?></span>
                         </div>
                         <div class="row mb-3">
-                            <input class="form-control form-control-md fw-semibold input_field" type="password" name="pass2" id="confirm_password" placeholder="Confirm password" value="<?php echo $pass2_value; ?>">
+                            <input class="form-control form-control-md input_field" type="password" name="pass2" id="confirm_password" placeholder="Confirm password" value="<?php echo $pass2_value; ?>">
                             <span class="text-danger fw-semibold " style="font-size:small"><?php echo $passmatchErr; ?></span>
                         </div>
                         <div class="row mb-3">

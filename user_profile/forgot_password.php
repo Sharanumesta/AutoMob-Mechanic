@@ -5,18 +5,16 @@
 session_start();
 
 $email = $_SESSION['email'];
-$otp_sent = $_SESSION['otp_sent'] ;
-// $get_otp = $_SESSION['get_otp'];
+// $otp_sent = $_SESSION['otp_sent'] ;
 
 $con = mysqli_connect($servername, $username, $password, $database);
 
 $block = isset($_POST['block']) ? $_POST['block'] : 0;
-// $block = 0 ;
 $confirmNewPassword = $newPassword = '' ;
 $otp_err = $newpassErr = $confnewpassErr = '';
 
 // send otp
-if($otp_sent && $block == 0){
+if($email && $block == 0){
     $otp = random_int(111111, 999999);
     $to = $email;
     $subject = "Email verification with One Time Password";
@@ -80,7 +78,7 @@ if($block == 1 && isset($_POST['verify'])){
                             })
                         });
                         setTimeout(function() {
-                            window.location.href = "login1.php";
+                            window.location.href = "login.php";
                         }, 2000);
                     </script>
                 <?php
@@ -96,13 +94,14 @@ if($block == 2 && isset($_POST['change'])){
 
     if(empty($newPassword) && empty($confirmPassword)){
         $newPassErr = "Password cannot be empty!";
-        $confirmNewPassErr = "Password cannot be empty!";
+        $confnewpassErr = "Password cannot be empty!";
     }
 
     if(empty($confirmPassword)){
-        $confirmNewPassErr = "Password cannot be empty!";
-    }else if($newPassword != $confirmPassword){
-        $confirmNewPassErr = "Confirm Password does not match!";   
+        $confnewpassErr = "Password cannot be empty!";
+    }
+    if($newPassword != $confirmNewPassword){
+        $confnewpassErr = "Confirm Password does not match!";   
     }
 
     if(empty($newPassword)){
@@ -129,10 +128,11 @@ if($block == 2 && isset($_POST['change'])){
                                 text: 'Password has been successfully changed'
                             })
                         });
+                        setTimeout(function() {
+                            window.location.href = "login.php";
+                        }, 2000);
                     </script>
                 <?php
-            header('location:login1.php');
-            exit;
             }
         }
     }
@@ -142,9 +142,11 @@ if($block == 2 && isset($_POST['change'])){
 <!DOCTYPE html>
 <head>
     <title>Change password</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
-    crossorigin="anonymous"></script>
+            integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+            crossorigin="anonymous">
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="css/profile.css">
 </head>
@@ -241,6 +243,5 @@ if($block == 2 && isset($_POST['change'])){
         }
     }
 </script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

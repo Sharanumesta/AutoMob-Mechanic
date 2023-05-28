@@ -11,28 +11,29 @@ $otp_err = '';
 if(isset($_POST['validate-otp'])){
     
     $otp = $_POST['otp'];
-    $sql2 = "SELECT * FROM `user` WHERE otp = '$otp'";
+    $sql2 = "SELECT * FROM `user` WHERE `email` = '$email'";
     $result = mysqli_query($con,$sql2);
-    $row = mysqli_num_rows($result);
-    
-    if($row > 0){
-        $sql = "UPDATE `user` SET `date_time` = now() ,`otp_status` = 1, `otp_attempts` = 0 ,`mail_status` = 1  WHERE email = '$email'";
-        mysqli_query($con,$sql);
-        // header('location: profile.php');
-        ?>
-            <script>
-                window.addEventListener('load', function(){
+    $row = mysqli_fetch_assoc($result);
+    $row_otp = $row['otp'];
+
+    if($otp == $row_otp ){
+        $sql = "UPDATE `user` SET `status` = 1 ,`date_time` = now() ,`otp_status` = 1, `otp_attempts` = 0 ,`mail_status` = 1  WHERE email = '$email'";
+        $result = mysqli_query($con,$sql);
+
+        if($result){
+            ?>
+                <script>
                     Swal.fire({
-                        icon: 'Success',
+                        icon: 'success',
                         title: 'Account Verified',
                         text: 'Your account has been successfully verified.'
-                    })
-                });
-                setTimeout(function() {
-                    window.location.href = "profile.php";
-                });
-            </script>
-        <?php
+                    });
+                    setTimeout(function() {
+                        window.location.href = "profile.php";
+                    }, 3000);
+                </script>
+            <?php
+        }
     }else{
         $sql1 = "SELECT otp_attempts FROM `user` WHERE email = '$email'";
         $result = mysqli_query($con,$sql1);
@@ -41,7 +42,7 @@ if(isset($_POST['validate-otp'])){
 
         $otp_attempts ++ ;
         $otp_err = 'Invalid OTP. ' . 4-$otp_attempts . ' attempts left';
-
+        
         $sql3 = "UPDATE `user` SET `otp_attempts` = $otp_attempts WHERE email = '$email'";
         mysqli_query($con,$sql3);
 
@@ -70,6 +71,8 @@ if(isset($_POST['validate-otp'])){
 <!DOCTYPE html>
 <head>
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.17/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.17/dist/sweetalert2.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="css/profile.css">
 </head>
@@ -101,6 +104,5 @@ if(isset($_POST['validate-otp'])){
             </div>
         </div>
     </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

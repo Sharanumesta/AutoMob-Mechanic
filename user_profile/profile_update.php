@@ -84,8 +84,7 @@
         //db query execution 
         if($nameError == '' && $numError == '' && $phoneError == '' && $emailError == '' && $noChangeError == ''){
 
-            $sql2 = "UPDATE user SET email='$updated_email', name='$updated_name', phone='$updated_phone' WHERE email='$email'";
-
+            $sql2 = "UPDATE user SET email = '$updated_email', name = '$updated_name', phone = '$updated_phone' WHERE email = '$email'";
             $result2 = mysqli_query($con, $sql2);
 
             if($result2){
@@ -106,10 +105,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
     <link rel="stylesheet" href="css/profile.css">
-    <style>
-        #error{ color:red;}
-        .navbar-dark .navbar-nav  .nav-link:hover{color: orange;}
-    </style>
+
 </head>
 <body class="bg-light">
     <!-- navbar start -->
@@ -118,14 +114,14 @@
     <i><a href="profile.php" class="navbar-brand space fw-bold fs-3 rounded p-1" style="color:#05445E">Profile</a></i>
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a href="mail1.php" class="nav-link active ms-2 me-2 fw-bold" id='hover'>Mail</a>
+            <a href="mail.php" class="nav-link active ms-2 me-2 fw-bold" id='hover'>Mail</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link  ms-2 me-2 fw-bold dropdown-toggle" id='hover' href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link  ms-2 me-2 fw-bold dropdown-toggle" style="color:#05445E;transform:scale(1.1);" id='hover' href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Update
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="profile_update.php"  name="profile">Profile</a></li>
+            <li><a class="dropdown-item fw-bold" href="profile_update.php" style="color:#05445E;background:#BDFFF3" name="profile">Profile</a></li>
             <li><a class="dropdown-item" href="password_update.php"  name="password">Password</a></li>
           </ul>
         </li>
@@ -133,7 +129,7 @@
             <a href="#" class="nav-link active ms-2 me-2 fw-bold" data-bs-toggle="modal" data-bs-target="#modal" id='hover'>Logout</a>
             <div class="modal fade" id="modal">
                 <div class="modal-dialog">
-                    <div class="modal-content">
+                    <div class="modal-content" style="background-color:#beeae2;">
                         <div class="modal-header">
                            <p class="fw-bold">Confirm Logout</p> 
                         </div>
@@ -141,8 +137,8 @@
                            <p class="fs-5">Are you sure! you want to logout?</p> 
                         </div>
                         <div class="modal-footer">
+                            <a href="logout.php"><button class="btn btn-success">Yes</button></a>
                             <button class="btn btn-danger" data-bs-dismiss="modal" data-bs-target="#modal">No</button> 
-                           <a href="logout.php"><button class="btn btn-success">Yes</button></a>
                         </div>
                     </div>
                 </div>
@@ -158,25 +154,25 @@
         <div class="row d-flex justify-content-center">
             <div class="col-md-5 mt-5 pt-3 border-0 rounded-3 shadow-lg">
                 <form class='p-4' action="#" method="POST">
-                    <span id="error" class="d-flex justify-content-center"><?php echo $noChangeError?></span>
+                    <span id="error" class="text-danger fw-semibold d-flex justify-content-center"><?php echo $noChangeError?></span>
                     <div class="mb-3">
-                        <label for="name" class="form-label fw-bold">Name<span id="error">*</span> : </label>
+                        <label for="name" class="form-label fw-bold">Name</label>
                         <input type="text" class="form-control input_field" name="name" value="<?php echo $name ?>">
-                        <span id="error"><?php echo $nameError?></span>
+                        <span id="error fw-semibold"><?php echo $nameError?></span>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label fw-bold">Email<span id="error">*</span> : </label>
+                        <label for="email" class="form-label fw-bold">Email</label>
                         <input type="text" class="form-control input_field" name="email" value="<?php echo $email ?>">
-                        <span id="error"><?php echo $emailError?></span>
+                        <span id="error fw-semibold"><?php echo $emailError?></span>
                     </div>
                     <div class="mb-3">
-                        <label for="phone" class="form-label fw-bold">Phone<span id="error">*</span> : </label>
+                        <label for="phone" class="form-label fw-bold">Phone</label>
                         <input type="text" class="form-control input_field" name="phone" value="<?php echo $phone ?>">
-                        <span id="error"><?php echo $phoneError?></span>
-                        <span id="error"><?php echo $numError?></span>
+                        <span id="error fw-semibold"><?php echo $phoneError?></span>
+                        <span id="error fw-semibold"><?php echo $numError?></span>
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label fw-bold">Password<span id="error">*</span> : </label>
+                        <label for="password" class="form-label fw-bold">Password</label>
                         <input type="password" class="form-control input_field " name="password" readonly value="........">
                     </div>
                     <div class="d-flex justify-content-center">

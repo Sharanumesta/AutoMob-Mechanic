@@ -63,8 +63,19 @@
                                 $result2 = mysqli_query($con, $sql1);
 
                                 if($result2){
-                                    $_SESSION['status'] = true;
-                                    header('location: profile.php');
+                                    ?>
+                                        <script>
+                                            window.addEventListener('load', function(){
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    title: 'Update Successful',
+                                                    text: 'Password has been successfully changed'
+                                                })
+                                            }).then(function() {
+                                                window.location.href = 'profile.php';
+                                            });
+                                        </script>
+                                    <?php
                                 }else{
                                     $_SESSION['status'] = false;
                                     header('location: password_update.php');
@@ -116,15 +127,15 @@
     <i><a href="profile.php" class="navbar-brand space fw-bold fs-3 rounded p-1" style="color:#05445E">Profile</a></i>
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a href="mail1.php" class="nav-link active ms-2 me-2 fw-bold" id='hover'>Mail</a>
+            <a href="mail.php" class="nav-link active ms-2 me-2 fw-bold" id='hover'>Mail</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link  ms-2 me-2 fw-bold dropdown-toggle" id='hover' href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link  ms-2 me-2 fw-bold dropdown-toggle" style="color:#05445E;transform: scale(1.1);" id='hover' href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Update
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="profile_update.php"  name="profile">Profile</a></li>
-            <li><a class="dropdown-item" href="password_update.php"  name="password">Password</a></li>
+            <li><a class="dropdown-item fw-bold" href="password_update.php" style="color:#05445E;background:#BDFFF3" name="password">Password</a></li>
           </ul>
         </li>
         <li class="nav-item">
@@ -159,16 +170,16 @@
                     <hr class="mb-4">
                 </div>
                 <div class="mb-4">
-                    <input type="password" class="form-control fw-semibold input_field" id="currentPassword" placeholder='Current Password' name="currentPassword" value="<?php echo $currentPassword?>">
-                    <span id="error" class="text-danger"><?php echo $currentPassErr ?></span>
+                    <input type="password" class="form-control input_field" id="currentPassword" placeholder='Current Password' name="currentPassword" value="<?php echo $currentPassword?>">
+                    <span id="error" style="font-size: 0.75rem;" class="text-danger "><?php echo $currentPassErr ?></span>
                 </div>
                 <div class="mb-4">
-                        <input type="password" class="form-control fw-semibold input_field" id="newPassword" placeholder='New Password' name="newPassword" value="<?php echo $newPassword?>">
-                        <span id="error" class="text-danger"><?php echo $newpassErr ?></span>
+                        <input type="password" class="form-control input_field" id="newPassword" placeholder='New Password' name="newPassword" value="<?php echo $newPassword?>">
+                        <span id="error"  style="font-size: 0.75rem;" class="text-danger"><?php echo $newpassErr ?></span>
                     </div>
                     <div class="mb-2">
-                        <input type="password" class="form-control fw-semibold input_field" id="confirmPassword" placeholder='Confirm New Password' name="confirmNewPassword" value="<?php echo $confirmNewPassword?>">
-                        <span id="error" class="text-danger"><?php echo $confnewpassErr ?></span>
+                        <input type="password" class="form-control input_field" id="confirmPassword" placeholder='Confirm New Password' name="confirmNewPassword"  value="<?php echo $confirmNewPassword?>">
+                        <span id="error" style="font-size: 0.75rem;" class="text-danger"><?php echo $confnewpassErr ?></span>
                     </div>
                     <div class="row ">
                         <div class="col"></div>
@@ -185,7 +196,7 @@
                     <div class="d-flex justify-content-center mt-3">
                         <p class='name' style="font-size: 0.75rem;">
                             Can't remember current password ?
-                            <a href="forgot_password.php" name='updatepass' class='fw-bold name cursor-pointer' style="font-size: 0.85rem">Forgot your password ?</a>
+                            <a href="forgot_password.php" name='updatepass' class='fw-bold name cursor-pointer' style="font-size: 0.80rem">Forgot your password ?</a>
                         </p>
                     </div>
                 </div>
